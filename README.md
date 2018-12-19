@@ -1,10 +1,10 @@
 # HelloELK
-HelloELK is a repository which provides hands on introduction to Elastic Stack(formerly ELK Stack) using sample configuration files.
+HelloELK is a repository which provides hands on introduction to Elastic Stack(formerly ELK Stack) using simple configuration file.
 Here, we will be creating a simple pipeline where inputs will be provided from STDIN by user and will be shown in Kibana.
 ![Pipeline](https://raw.githubusercontent.com/contactsharmamohit/HelloELK/master/GettingStartedIllustrations/Pipeline.png)
 
 ## Prerequisites
-Elastic Stack required Java 8 or above. Make sure you have one in place by executing following command in CMD.
+Elastic Stack requires Java 8 or above. Make sure you have one in place by executing following command in CMD.
 ```CMD
 java -version
 ```
@@ -14,16 +14,16 @@ java version "1.8.0_121"
 Java(TM) SE Runtime Environment (build 1.8.0_121-b13)
 Java HotSpot(TM) 64-Bit Server VM (build 25.121-b13, mixed mode)
 ```
-If Java is not installed and configured properly, please follow steps mentioned [here](https://www.java.com/en/download/help/download_options.xml).
+If Java is not installed or configured properly, please follow steps mentioned [here](https://www.java.com/en/download/help/download_options.xml).
 
 ## Downloading Elastic Stack
-Head over to official [downloads](https://www.elastic.co/downloads) section and download ElasticSearch, Logstash and Kibana.
+Head over to Elastic's [downloads](https://www.elastic.co/downloads) section and download ElasticSearch, Logstash and Kibana.
 For reference, following versions are used here for windows environment:
 -	ElasticSearch [v6.5.1](https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.5.1.zip)
 -	Logstash [v6.5.1](https://artifacts.elastic.co/downloads/logstash/logstash-6.5.1.zip)
 -	Kibana [v6.5.1](https://artifacts.elastic.co/downloads/kibana/kibana-6.5.1-windows-x86_64.zip)
 
-Unzip the packages and we’re good to go.
+Unzip the packages and we're good to go.
 
 ## Setting Up the Elastic Stack
 ### ElasticSearch Setup
@@ -56,13 +56,14 @@ elasticsearch
 ```
 ### Logstash Setup
 1.	Create a file named [logstash.conf](https://github.com/contactsharmamohit/HelloELK/blob/master/logstash.conf) inside directory "<Extracted-Logstash-Zip-Path>\logstash-6.5.1".
-This is logstash configuration file which contains plugins like "input", "filter" and "output". Input plugin is used by logstash to read data from the source provided in input plugin, which in our case is, STDIN. Filter plugin is used to filter out irrelevant data and massage the incoming data into JSON documents. We have used GROK filter to achieve this. Output plugin is used to send data extracted from input using filter to provided deswtination, which in our case is ElasticSearch.
+This is logstash configuration file which contains "input", "filter" and "output" plugins. Input plugin is used by logstash to read data from the source specified, which in our case is, STDIN. Filter plugin is used to filter out irrelevant data and massage the incoming data into JSON objects. We have used GROK filter to achieve this. Output plugin is used to send data extracted from input using filter to provided destination, which in our case is ElasticSearch.
 
 2.	Open command prompt in "<Extracted-Logstash-Zip-Path>\logstash-6.5.1\bin" directory and execute command:
 ```CMD
 logstash -f ../logstash.conf
 ```
-This will start the logstash pipeline (INPUT -> FILTER -> OUTPUT).
+This will start the logstash pipeline 
+  INPUT(STDIN) -> FILTER(GROK) -> OUTPUT(ElasticSearch).
 
 3.	After getting "pipelines running" or "Successfully started API Endpoint" message, we can proceed to next step. Hereafter, this window will be referred as "Logstash Console". Write any message here and hit Enter. Get ready to see your message in Kibana!
 
